@@ -1,14 +1,11 @@
 package itx.fileserver.enums;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@Getter
-@RequiredArgsConstructor
 public enum AdminAccess implements Category {
-    NAME("USER_ACCESS"),
-    LOGIN("LOGIN"),
-    LOGOUT("LOGOUT");
-
-    private final String value;
+    ADMIN_ACCESS,
+    GET_USERS,
+    CREATE_USER,
+    DELETE_USER,
+    GET_ACCESS_FILTERS,
+    CREATE_ACCESS_FILTER,
+    DELETE_ACCESS_FILTER
 }

@@ -1,6 +1,7 @@
 package itx.fileserver.services;
 
 import itx.fileserver.config.FileServerConfig;
+import itx.fileserver.enums.FileAccess;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.dto.AuditQuery;
 import itx.fileserver.dto.AuditRecord;
@@ -32,7 +33,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import static itx.fileserver.dto.AuditConstants.FILE_ACCESS;
+import static itx.fileserver.enums.FileAccess.FILE_ACCESS;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -65,11 +66,11 @@ public class FileServiceImpl implements FileService {
         verifyReadAccess(userData, filePath);
         AuditQuery auditQuery = AuditQuery.newBuilder()
                 .withResourcePattern(filePath.toString())
-                .withCategory(FILE_ACCESS.NAME)
+                .withCategory(FILE_ACCESS)
                 .build();
         Collection<AuditRecord> audits = auditService.getAudits(auditQuery);
         ResourceAccessInfo resourceAccessInfo = new ResourceAccessInfo();
-        audits.forEach(a -> resourceAccessInfo.incrementCounter(a.getAction()));
+        audits.forEach(a -> resourceAccessInfo.incrementCounter(a.getAction().toString()));
         return resourceAccessInfo;
     }
 
@@ -191,38 +192,32 @@ public class FileServiceImpl implements FileService {
     /* AUDIT METHODS */
 
     private void createDownloadFileAuditRecord(UserData userData, Path filePath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.DOWNLOAD, userData.getId().getId(), filePath.toString(), "OK", "");
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.DOWNLOAD, userData.getId().getId(), filePath.toString(), "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     private void createListDirectoryAuditRecord(UserData userData, Path filePath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.LIST_DIR, userData.getId().getId(), filePath.toString(), "OK", "");
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.LIST_DIR, userData.getId().getId(), filePath.toString(), "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     private void createUploadFileAuditRecord(UserData userData, Path filePath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.UPLOAD, userData.getId().getId(), filePath.toString(), "OK", "");
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.UPLOAD, userData.getId().getId(), filePath.toString(), "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     private void createDeleteAuditRecord(UserData userData, Path filePath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.DELETE, userData.getId().getId(), filePath.toString(), "OK", "");
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.DELETE, userData.getId().getId(), filePath.toString(), "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     private void createCreateDirectoryAuditRecord(UserData userData, Path filePath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.CREATE_DIR, userData.getId().getId(), filePath.toString(), "OK", "");
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.CREATE_DIR, userData.getId().getId(), filePath.toString(), "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     private void createMoveAuditRecord(UserData userData, Path sourcePath, Path destinationPath) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FILE_ACCESS.NAME,
-                FILE_ACCESS.MOVE, userData.getId().getId(), sourcePath.toString(), "OK", destinationPath.toString());
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), FileAccess.MOVE, userData.getId().getId(), sourcePath.toString(), "OK", destinationPath.toString());
         auditService.storeAudit(auditRecord);
     }
 

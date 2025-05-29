@@ -1,32 +1,18 @@
 package itx.fileserver.controler;
 
-import itx.fileserver.dto.UserConfig;
+import itx.fileserver.dto.*;
+import itx.fileserver.enums.AdminAccess;
 import itx.fileserver.services.FileService;
 import itx.fileserver.services.SecurityService;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.services.data.FileAccessManagerService;
 import itx.fileserver.services.data.UserManagerService;
-import itx.fileserver.dto.AuditQuery;
-import itx.fileserver.dto.AuditRecord;
-import itx.fileserver.dto.FileStorageInfo;
-import itx.fileserver.dto.FilterConfig;
-import itx.fileserver.dto.RoleId;
-import itx.fileserver.dto.SessionId;
-import itx.fileserver.dto.Sessions;
-import itx.fileserver.dto.UserData;
-import itx.fileserver.dto.UserId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.Instant;
@@ -34,8 +20,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-
-import static itx.fileserver.dto.AuditConstants.ADMIN_ACCESS;
 
 @RestController
 @RequestMapping(path = "/services/admin")
@@ -169,37 +153,37 @@ public class AdminController {
     /* AUDIT METHODS */
 
     public void createGetUsersAuditRecord(Optional<UserData> userData) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.GET_USERS,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.GET_USERS,
                 userData.get().getId().getId(), "", "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     public void createCreateUserAuditRecord(Optional<UserData> userData, UserConfig userConfig) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.CREATE_USER,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.CREATE_USER,
                 userData.get().getId().getId(), "", "OK", userConfig.getUsername());
         auditService.storeAudit(auditRecord);
     }
 
     public void createRemoveUserAuditRecord(Optional<UserData> userData, String userId) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.DELETE_USER,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.DELETE_USER,
                 userData.get().getId().getId(), "", "OK", userId);
         auditService.storeAudit(auditRecord);
     }
 
     public void createGetFileAccessFiltersAuditRecord(Optional<UserData> userData) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.GET_ACCESS_FILTERS,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.GET_ACCESS_FILTERS,
                 userData.get().getId().getId(), "", "OK", "");
         auditService.storeAudit(auditRecord);
     }
 
     public void createCreateFileAccessFilterAuditRecord(Optional<UserData> userData, FilterConfig filterConfig) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.CREATE_ACCESS_FILTER,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.CREATE_ACCESS_FILTER,
                 userData.get().getId().getId(), "", "OK", filterConfig.getAccess());
         auditService.storeAudit(auditRecord);
     }
 
     public void createRemoveFileAccessFilterAuditRecord(Optional<UserData> userData, FilterConfig filterConfig) {
-        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), ADMIN_ACCESS.NAME, ADMIN_ACCESS.DELETE_ACCESS_FILTER,
+        AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), AdminAccess.DELETE_ACCESS_FILTER,
                 userData.get().getId().getId(), "", "OK", filterConfig.getAccess());
         auditService.storeAudit(auditRecord);
     }

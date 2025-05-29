@@ -1,5 +1,7 @@
 package itx.fileserver.services;
 
+import itx.fileserver.enums.Category;
+import itx.fileserver.enums.UserAccess;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.services.data.UserManagerService;
 import itx.fileserver.dto.AuditRecord;
@@ -22,7 +24,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static itx.fileserver.dto.AuditConstants.USER_ACCESS;
+import static itx.fileserver.enums.UserAccess.LOGIN;
 
 @Service
 public class SecurityServiceImpl implements SecurityService {
@@ -133,30 +135,30 @@ public class SecurityServiceImpl implements SecurityService {
     private void createAnonymousSessionRecord(UserData previousData, SessionId sessionId) {
         if (previousData == null) {
             AuditRecord auditRecord
-                    = new AuditRecord(Instant.now().getEpochSecond(), USER_ACCESS.NAME, USER_ACCESS.LOGIN, "ANONYMOUS", "", "OK", sessionId.getId());
+                    = new AuditRecord(Instant.now().getEpochSecond(), LOGIN, "ANONYMOUS", "", "OK", sessionId.getId());
             auditService.storeAudit(auditRecord);
         }
     }
 
     private void createLoginRecordOK(String userId, SessionId sessionId) {
         AuditRecord auditRecord
-                = new AuditRecord(Instant.now().getEpochSecond(), USER_ACCESS.NAME, USER_ACCESS.LOGIN, userId, "", "OK", sessionId.getId());
+                = new AuditRecord(Instant.now().getEpochSecond(), LOGIN, userId, "", "OK", sessionId.getId());
         auditService.storeAudit(auditRecord);
     }
 
     private void createLoginRecordFailed(String userId, SessionId sessionId) {
         AuditRecord auditRecord
-                = new AuditRecord(Instant.now().getEpochSecond(), USER_ACCESS.NAME, USER_ACCESS.LOGIN, userId, "", "ERROR", sessionId.getId());
+                = new AuditRecord(Instant.now().getEpochSecond(), LOGIN, userId, "", "ERROR", sessionId.getId());
         auditService.storeAudit(auditRecord);
     }
 
     private void createLogoutRecord(UserData userDataAuthorized, UserData userDataAnonymous, SessionId sessionId) {
         if (userDataAuthorized != null) {
-            AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), USER_ACCESS.NAME, USER_ACCESS.LOGOUT, userDataAuthorized.getId().getId(), "", "OK", sessionId.getId());
+            AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), UserAccess.LOGOUT, userDataAuthorized.getId().getId(), "", "OK", sessionId.getId());
             auditService.storeAudit(auditRecord);
         }
         if (userDataAnonymous != null) {
-            AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), USER_ACCESS.NAME, USER_ACCESS.LOGOUT, "ANONYMOUS", "", "OK", sessionId.getId());
+            AuditRecord auditRecord = new AuditRecord(Instant.now().getEpochSecond(), UserAccess.LOGOUT, "ANONYMOUS", "", "OK", sessionId.getId());
             auditService.storeAudit(auditRecord);
         }
     }

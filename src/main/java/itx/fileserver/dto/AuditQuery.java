@@ -1,7 +1,12 @@
 package itx.fileserver.dto;
 
+import itx.fileserver.enums.Category;
 import itx.fileserver.services.FileUtils;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 public class AuditQuery {
 
     public static final AuditQuery MATCH_ALL = new AuditQuery();
@@ -9,66 +14,10 @@ public class AuditQuery {
     private String userId;
     private Long timeBegin;
     private Long timeEnd;
-    private String category;
-    private String action;
+    private Category category;
+    private Category action;
     private String resourcePattern;
     private String messagePattern;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Long getTimeBegin() {
-        return timeBegin;
-    }
-
-    public void setTimeBegin(Long timeBegin) {
-        this.timeBegin = timeBegin;
-    }
-
-    public Long getTimeEnd() {
-        return timeEnd;
-    }
-
-    public void setTimeEnd(Long timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getResourcePattern() {
-        return resourcePattern;
-    }
-
-    public void setResourcePattern(String resourcePattern) {
-        this.resourcePattern = resourcePattern;
-    }
-
-    public String getMessagePattern() {
-        return messagePattern;
-    }
-
-    public void setMessagePattern(String messagePattern) {
-        this.messagePattern = messagePattern;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public static class Builder {
         private final AuditQuery auditQuery;
@@ -115,7 +64,7 @@ public class AuditQuery {
          * @param category
          * @return
          */
-        public Builder withCategory(String category) {
+        public Builder withCategory(Category category) {
             auditQuery.setCategory(category);
             return this;
         }
@@ -126,7 +75,7 @@ public class AuditQuery {
          * @param action
          * @return
          */
-        public Builder withAction(String action) {
+        public Builder withAction(Category action) {
             auditQuery.setAction(action);
             return this;
         }
