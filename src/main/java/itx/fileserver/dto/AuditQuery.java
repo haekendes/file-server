@@ -1,6 +1,6 @@
 package itx.fileserver.dto;
 
-import itx.fileserver.enums.Category;
+import itx.fileserver.enums.Action;
 import itx.fileserver.services.FileUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +14,8 @@ public class AuditQuery {
     private String userId;
     private Long timeBegin;
     private Long timeEnd;
-    private Category category;
-    private Category action;
+    private Class<? extends Action> category;
+    private Action action;
     private String resourcePattern;
     private String messagePattern;
 
@@ -64,7 +64,7 @@ public class AuditQuery {
          * @param category
          * @return
          */
-        public Builder withCategory(Category category) {
+        public Builder withCategory(Class<? extends Action> category) {
             auditQuery.setCategory(category);
             return this;
         }
@@ -75,7 +75,7 @@ public class AuditQuery {
          * @param action
          * @return
          */
-        public Builder withAction(Category action) {
+        public Builder withAction(Action action) {
             auditQuery.setAction(action);
             return this;
         }

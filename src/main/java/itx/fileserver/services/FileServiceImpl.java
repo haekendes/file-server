@@ -33,8 +33,6 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import static itx.fileserver.enums.FileAccess.FILE_ACCESS;
-
 @Service
 public class FileServiceImpl implements FileService {
 
@@ -66,7 +64,7 @@ public class FileServiceImpl implements FileService {
         verifyReadAccess(userData, filePath);
         AuditQuery auditQuery = AuditQuery.newBuilder()
                 .withResourcePattern(filePath.toString())
-                .withCategory(FILE_ACCESS)
+                .withCategory(FileAccess.class)
                 .build();
         Collection<AuditRecord> audits = auditService.getAudits(auditQuery);
         ResourceAccessInfo resourceAccessInfo = new ResourceAccessInfo();

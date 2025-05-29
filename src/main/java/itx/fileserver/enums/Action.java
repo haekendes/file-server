@@ -1,6 +1,6 @@
 package itx.fileserver.enums;
 
-public interface Category {
+public interface Action {
 
     String toString();
 }

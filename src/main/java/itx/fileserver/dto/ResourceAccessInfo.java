@@ -1,7 +1,5 @@
 package itx.fileserver.dto;
 
-import itx.fileserver.enums.Category;
-
 import java.util.HashMap;
 import java.util.Map;
 

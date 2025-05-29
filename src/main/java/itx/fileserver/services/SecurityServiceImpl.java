@@ -1,6 +1,5 @@
 package itx.fileserver.services;
 
-import itx.fileserver.enums.Category;
 import itx.fileserver.enums.UserAccess;
 import itx.fileserver.services.data.AuditService;
 import itx.fileserver.services.data.UserManagerService;

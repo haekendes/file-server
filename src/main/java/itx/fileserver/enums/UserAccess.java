@@ -1,7 +1,6 @@
 package itx.fileserver.enums;
 
-public enum UserAccess implements Category {
-    USER_ACCESS,
+public enum UserAccess implements Action {
     LOGIN,
     LOGOUT
 }

@@ -1,5 +1,6 @@
 package itx.fileserver.test;
 
+import itx.fileserver.enums.Action;
 import itx.fileserver.enums.FileAccess;
 import itx.fileserver.enums.UserAccess;
 import itx.fileserver.services.data.AuditService;
@@ -17,8 +18,6 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-import static itx.fileserver.enums.FileAccess.FILE_ACCESS;
-import static itx.fileserver.enums.UserAccess.USER_ACCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AuditServiceTest {
@@ -40,11 +39,11 @@ class AuditServiceTest {
     @ParameterizedTest
     @MethodSource("data")
     void testQueryAuditServiceMatchCategory(AuditService auditService) {
-        AuditQuery auditQuery = AuditQuery.newBuilder().withCategory(USER_ACCESS).build();
+        AuditQuery auditQuery = AuditQuery.newBuilder().withCategory(UserAccess.class).build();
         Collection<AuditRecord> audits = auditService.getAudits(auditQuery);
         assertEquals(2, audits.size());
 
-        auditQuery = AuditQuery.newBuilder().withCategory(FILE_ACCESS).build();
+        auditQuery = AuditQuery.newBuilder().withCategory(FileAccess.class).build();
         audits = auditService.getAudits(auditQuery);
         assertEquals(8, audits.size());
     }

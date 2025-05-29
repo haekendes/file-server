@@ -1,7 +1,6 @@
 package itx.fileserver.enums;
 
-public enum FileAccess implements Category {
-    FILE_ACCESS,
+public enum FileAccess implements Action {
     LIST_DIR,
     DOWNLOAD,
     UPLOAD,

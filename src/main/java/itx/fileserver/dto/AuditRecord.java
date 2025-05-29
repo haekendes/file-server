@@ -2,15 +2,15 @@ package itx.fileserver.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import itx.fileserver.enums.Category;
+import itx.fileserver.enums.Action;
 import lombok.Getter;
 
 @Getter
 public class AuditRecord {
 
     private final Long timestamp;
-    private final Category category;
-    private final Category action;
+    private final Class<? extends Action> category;
+    private final Action action;
     private final String userId;
     private final String resource;
     private final String message;
@@ -18,14 +18,14 @@ public class AuditRecord {
 
     @JsonCreator
     public AuditRecord(@JsonProperty("timestamp") Long timestamp,
-                       @JsonProperty("category") Category category,
+                       @JsonProperty("action") Action action,
                        @JsonProperty("userId") String userId,
                        @JsonProperty("resource") String resource,
                        @JsonProperty("message") String message,
                        @JsonProperty("data") String data) {
         this.timestamp = timestamp;
-        this.category = category;
-        this.action = category;
+        this.category = action.getClass();
+        this.action = action;
         this.userId = userId;
         this.resource = resource;
         this.message = message;

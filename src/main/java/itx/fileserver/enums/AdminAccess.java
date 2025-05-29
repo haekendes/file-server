@@ -1,7 +1,6 @@
 package itx.fileserver.enums;
 
-public enum AdminAccess implements Category {
-    ADMIN_ACCESS,
+public enum AdminAccess implements Action {
     GET_USERS,
     CREATE_USER,
     DELETE_USER,
