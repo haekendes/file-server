@@ -127,8 +127,9 @@ public class FileServiceImpl implements FileService {
         byte[] buffer = new byte[inputStream.available()];
         inputStream.read(buffer);
         File targetFile = resolvedFilePath.toFile();
-        OutputStream outStream = new FileOutputStream(targetFile);
-        outStream.write(buffer);
+        try (OutputStream outStream = new FileOutputStream(targetFile)) {
+            outStream.write(buffer);
+        }
         createUploadFileAuditRecord(userData, filePath);
     }
 
