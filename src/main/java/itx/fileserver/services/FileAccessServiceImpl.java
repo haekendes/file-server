@@ -56,10 +56,10 @@ public class FileAccessServiceImpl implements FileAccessService {
         String strPath = path.toString();
         if (fileAccessFilters != null) {
             for (FileAccessFilter filter: fileAccessFilters) {
-                LOG.info("checkAccess: {} {} {} {}/{}", role.getId(), strPath, filter.getPath(), expectedAccessType, filter.getAccessType());
-                boolean match = FileUtils.wildcardMatch(strPath, filter.getPath());
+                LOG.info("checkAccess: {} {} {} {}/{}", role.getId(), strPath, filter.path(), expectedAccessType, filter.accessType());
+                boolean match = FileUtils.wildcardMatch(strPath, filter.path());
                 if (match) {
-                    result.add(filter.getAccessType());
+                    result.add(filter.accessType());
                 }
             }
         }

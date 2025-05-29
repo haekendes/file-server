@@ -11,7 +11,7 @@ server:
 #    keyAlias: localhost
 
 fileserver:
-   home: /home/juraj/Downloads
+   home: V:/file-server
    data:
      storage: inmemory
    anonymous:        #setting for anonymous users

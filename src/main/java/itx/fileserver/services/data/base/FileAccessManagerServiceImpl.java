@@ -34,7 +34,7 @@ public abstract class FileAccessManagerServiceImpl implements FileAccessManagerS
                 fileAccessFilters = new ArrayList<>();
                 filters.put(roleId, fileAccessFilters);
             }
-            LOG.info("Filter: role={} path={} {}", roleId.getId(), fileAccessFilter.getPath(), fileAccessFilter.getAccessType());
+            LOG.info("Filter: role={} path={} {}", roleId.getId(), fileAccessFilter.path(), fileAccessFilter.accessType());
             fileAccessFilters.add(fileAccessFilter);
         });
         persist();
@@ -63,7 +63,7 @@ public abstract class FileAccessManagerServiceImpl implements FileAccessManagerS
             List<FileAccessFilter> fileAccessFilters = filters.get(roleId);
             if (fileAccessFilters != null) {
                 List<FileAccessFilter> collected =
-                        fileAccessFilters.stream().filter(fa -> !fa.getPath().equals(filterConfig.getPath())).collect(Collectors.toList());
+                        fileAccessFilters.stream().filter(fa -> !fa.path().equals(filterConfig.getPath())).collect(Collectors.toList());
                 if (collected.size() > 0) {
                     filters.replace(roleId, collected);
                 } else {
