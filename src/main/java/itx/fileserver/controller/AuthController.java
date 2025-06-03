@@ -1,4 +1,4 @@
-package itx.fileserver.controler;
+package itx.fileserver.controller;
 
 import itx.fileserver.services.SecurityService;
 import itx.fileserver.dto.LoginRequest;

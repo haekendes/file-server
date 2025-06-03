@@ -10,6 +10,9 @@ server:
 #    keyStoreType: JKS
 #    keyAlias: localhost
 
+spring:
+  thread-executor: virtual
+
 fileserver:
    home: V:/file-server
    data:

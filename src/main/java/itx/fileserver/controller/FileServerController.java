@@ -1,4 +1,4 @@
-package itx.fileserver.controler;
+package itx.fileserver.controller;
 
 import itx.fileserver.dto.MoveRequest;
 import itx.fileserver.services.FileService;

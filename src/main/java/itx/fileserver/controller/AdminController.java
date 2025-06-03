@@ -1,4 +1,4 @@
-package itx.fileserver.controler;
+package itx.fileserver.controller;
 
 import itx.fileserver.dto.*;
 import itx.fileserver.enums.AdminAccess;

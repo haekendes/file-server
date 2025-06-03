@@ -1,6 +1,9 @@
 server:
   port: 8889
 
+spring:
+  thread-executor: virtual
+
 fileserver:
   home: /tmp/file-server-test-home/
   data:
